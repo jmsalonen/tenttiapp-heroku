@@ -10,6 +10,12 @@ const PORT = process.env.PORT || 3001
 app.use(express.static('./client/build'))
 
 
+
+
+
+
+
+
 // -- WEBSOCKET -- 
 
 const SOCKETPORT = 3002
