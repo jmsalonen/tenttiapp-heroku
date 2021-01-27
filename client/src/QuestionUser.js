@@ -8,6 +8,13 @@ import {
 } from "react-router-dom";
 import { FormattedMessage } from 'react-intl'
 
+let host
+
+if (process.env.NODE_ENV) 
+  host = 'https://tenttiapp.herokuapp.com/'
+else
+  host = `http://localhost:3001/`
+
 const QuestionUser = ({ token, profile, examid, userid }) => {
 
   const [myToken, setMyToken] = useState(token)
@@ -23,7 +30,7 @@ const getQuestion = async () => {
     id: examid
   }
   await axios
-    .put(`http://localhost:3001/user/teacher/get/question`, data, {
+    .put(`${host}user/teacher/get/question`, data, {
       headers: {
         'authorization': `${myToken}`
       }
@@ -39,7 +46,7 @@ const getChoice = async () => {
     exam: examid
   }
   await axios
-    .put(`http://localhost:3001/user/student/get/choice`, data, {
+    .put(`${host}user/student/get/choice`, data, {
       headers: {
         'authorization': `${myToken}`
       }
@@ -57,7 +64,7 @@ const getChoice = async () => {
       choice: id,
       value: value
     }
-    await axios.put(`http://localhost:3001/user/student/update/answer/`, data, {
+    await axios.put(`${host}user/student/update/answer/`, data, {
       headers: {
         'authorization': `${myToken}`
       }
@@ -70,7 +77,7 @@ const getChoice = async () => {
       exam: examid,
       user: userid
     }
-    await axios.put(`http://localhost:3001/user/student/finished/`, data, {
+    await axios.put(`${host}user/student/finished/`, data, {
       headers: {
         'authorization': `${myToken}`
       }

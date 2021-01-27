@@ -13,6 +13,12 @@ import { FormattedMessage } from 'react-intl'
 
 import Question from './Question.js'
 
+let host
+
+if (process.env.NODE_ENV) 
+  host = 'https://tenttiapp.herokuapp.com/'
+else
+  host = `http://localhost:3001/`
 
 const Exam = ({ token, profile }) => {
   const { path, url } = useRouteMatch()
@@ -30,7 +36,7 @@ const Exam = ({ token, profile }) => {
 
   const getProfile = async () => {
     await axios
-      .get(`http://localhost:3001/user/profile`, {
+      .get(`${host}user/profile`, {
         headers: {
           'authorization': `${myToken}`
         }
@@ -46,7 +52,7 @@ const Exam = ({ token, profile }) => {
       course: courseid
     }
     await axios
-      .put(`http://localhost:3001/user/course/exam`, data, {
+      .put(`${host}user/course/exam`, data, {
         headers: {
           'authorization': `${myToken}`
         }
@@ -63,7 +69,7 @@ const Exam = ({ token, profile }) => {
       course: courseid
     }
     await axios
-      .put(`http://localhost:3001/user/teacher/new/exam`, data, {
+      .put(`${host}user/teacher/new/exam`, data, {
         headers: {
           'authorization': `${myToken}`
         }
@@ -78,7 +84,7 @@ const Exam = ({ token, profile }) => {
       id: examId
     }
     await axios
-      .put(`http://localhost:3001/user/teacher/delete/exam`, data, {
+      .put(`${host}user/teacher/delete/exam`, data, {
         headers: {
           'authorization': `${myToken}`
         }
@@ -94,7 +100,7 @@ const Exam = ({ token, profile }) => {
       id: id,
       name: value
     }
-    await axios.put(`http://localhost:3001/user/teacher/update/exam/`, data, {
+    await axios.put(`${host}user/teacher/update/exam/`, data, {
       headers: {
         'authorization': `${myToken}`
       }

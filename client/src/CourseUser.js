@@ -2,6 +2,13 @@ import { useEffect, useState } from 'react'
 import { Button, Card } from '@material-ui/core'
 import axios from 'axios'
 
+let host
+
+if (process.env.NODE_ENV) 
+  host = 'https://tenttiapp.herokuapp.com/'
+else
+  host = `http://localhost:3001/`
+
 const CourseUser = ({ token, profile }) => {
   const [myToken, setMyToken] = useState(token)
   const [myProfile, setMyProfile] = useState(profile)
@@ -16,7 +23,7 @@ const CourseUser = ({ token, profile }) => {
 
   const getProfile = async () => {
     await axios
-      .get(`http://localhost:3001/user/profile`, {
+      .get(`${host}user/profile`, {
         headers: {
           'authorization': `${myToken}`
         }
@@ -32,7 +39,7 @@ const CourseUser = ({ token, profile }) => {
       id: myProfile.id
     }
     await axios
-      .put(`http://localhost:3001/user/course`, data, {
+      .put(`${host}user/course`, data, {
         headers: {
           'authorization': `${myToken}`
         }
@@ -47,7 +54,7 @@ const CourseUser = ({ token, profile }) => {
       id: profile.id
     }
     await axios
-      .put(`http://localhost:3001/user/student/courses/other`, data, {
+      .put(`${host}user/student/courses/other`, data, {
         headers: {
           'authorization': `${myToken}`
         }
@@ -62,7 +69,7 @@ const CourseUser = ({ token, profile }) => {
       userid: profile.id,
       courseid: courseId
     }
-    await axios.put(`http://localhost:3001/user/student/courses/join`, data, {
+    await axios.put(`${host}user/student/courses/join`, data, {
       headers: {
         'authorization': `${myToken}`
       }
@@ -76,7 +83,7 @@ const CourseUser = ({ token, profile }) => {
       courseid: courseId
     }
 
-    await axios.put(`http://localhost:3001/user/student/courses/leave`, data, {
+    await axios.put(`${host}user/student/courses/leave`, data, {
       headers: {
         'authorization': `${myToken}`
       }

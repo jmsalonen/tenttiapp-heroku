@@ -8,6 +8,13 @@ import {
 } from "react-router-dom"
 import { FormattedMessage } from 'react-intl'
 
+let host
+
+if (process.env.NODE_ENV) 
+  host = 'https://tenttiapp.herokuapp.com/'
+else
+  host = `http://localhost:3001/`
+
 const QuestionEdit = ({ token, profile }) => {
 
   const [myToken, setMyToken] = useState(token)
@@ -26,7 +33,7 @@ const QuestionEdit = ({ token, profile }) => {
 
   const getProfile = async () => {
     await axios
-      .get(`http://localhost:3001/user/profile`, {
+      .get(`${host}user/profile`, {
         headers: {
           'authorization': `${myToken}`
         }
@@ -41,7 +48,7 @@ const QuestionEdit = ({ token, profile }) => {
       id: examid
     }
     await axios
-      .put(`http://localhost:3001/user/teacher/get/question`, data, {
+      .put(`${host}user/teacher/get/question`, data, {
         headers: {
           'authorization': `${myToken}`
         }
@@ -56,7 +63,7 @@ const QuestionEdit = ({ token, profile }) => {
       id: examid
     }
     await axios
-      .put(`http://localhost:3001/user/teacher/get/choice`, data, {
+      .put(`${host}user/teacher/get/choice`, data, {
         headers: {
           'authorization': `${myToken}`
         }
@@ -71,7 +78,7 @@ const QuestionEdit = ({ token, profile }) => {
       id: examid
     } 
     await axios
-      .put(`http://localhost:3001/user/teacher/add/question/`, data, {
+      .put(`${host}user/teacher/add/question/`, data, {
         headers: {
           'authorization': `${myToken}`
         }
@@ -85,7 +92,7 @@ const QuestionEdit = ({ token, profile }) => {
     const data = {
       id: id
     }
-    await axios.put(`http://localhost:3001/user/teacher/delete/question/`, data, {
+    await axios.put(`${host}user/teacher/delete/question/`, data, {
       headers: {
         'authorization': `${myToken}`
       }
@@ -100,7 +107,7 @@ const QuestionEdit = ({ token, profile }) => {
       id: id
     } 
     await axios
-      .put(`http://localhost:3001/user/teacher/add/choice/`, data, {
+      .put(`${host}user/teacher/add/choice/`, data, {
         headers: {
           'authorization': `${myToken}`
         }
@@ -114,7 +121,7 @@ const QuestionEdit = ({ token, profile }) => {
     const data = {
       id: id
     }
-    await axios.put(`http://localhost:3001/user/teacher/delete/choice/`, data, {
+    await axios.put(`${host}user/teacher/delete/choice/`, data, {
       headers: {
         'authorization': `${myToken}`
       }
@@ -129,7 +136,7 @@ const QuestionEdit = ({ token, profile }) => {
       id: id,
       name: value
     }
-    await axios.put(`http://localhost:3001/user/teacher/update/question/`, data, {
+    await axios.put(`${host}user/teacher/update/question/`, data, {
       headers: {
         'authorization': `${myToken}`
       }
@@ -144,7 +151,7 @@ const QuestionEdit = ({ token, profile }) => {
       id: id,
       name: value
     }
-    await axios.put(`http://localhost:3001/user/teacher/update/choice/`, data, {
+    await axios.put(`${host}user/teacher/update/choice/`, data, {
       headers: {
         'authorization': `${myToken}`
       }
@@ -159,7 +166,7 @@ const QuestionEdit = ({ token, profile }) => {
       id: id,
       correct: value
     }
-    await axios.put(`http://localhost:3001/user/teacher/update/correct/`, data, {
+    await axios.put(`${host}user/teacher/update/correct/`, data, {
       headers: {
         'authorization': `${myToken}`
       }

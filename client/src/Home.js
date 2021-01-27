@@ -3,6 +3,13 @@ import { Button, Card } from '@material-ui/core'
 import { Link } from "react-router-dom";
 import axios from 'axios'
 
+let host
+
+if (process.env.NODE_ENV) 
+  host = 'https://tenttiapp.herokuapp.com/'
+else
+  host = `http://localhost:3001/`
+
 const Home = ({ token, profile }) => {
   const [myToken, setMyToken] = useState(token)
   const [myProfile, setMyProfile] = useState(profile)
@@ -14,7 +21,7 @@ const Home = ({ token, profile }) => {
 
   const getProfile = async () => {
     await axios
-      .get(`http://localhost:3001/user/profile`, {
+      .get(`${host}user/profile`, {
         headers: {
           'authorization': `${myToken}`
         }
@@ -30,7 +37,7 @@ const Home = ({ token, profile }) => {
       id: myProfile.id
     }
     await axios
-      .put(`http://localhost:3001/user/course`, data, {
+      .put(`${host}user/course`, data, {
         headers: {
           'authorization': `${myToken}`
         }

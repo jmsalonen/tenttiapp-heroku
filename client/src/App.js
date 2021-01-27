@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import axios from 'axios'
 
-//import Users from './Users.js'
 import Header from './Header.js'
 import Exam from './Exam.js'
 import LogIn from './LogIn.js'
@@ -25,6 +24,14 @@ const messages = {
   'en': messages_en
 }
 
+let host
+
+if (process.env.NODE_ENV) 
+  host = 'https://tenttiapp.herokuapp.com/'
+else
+  host = `http://localhost:3001/`
+
+
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem('token'))
   const [isLogged, setIsLogged] = useState(false)
@@ -37,7 +44,7 @@ const App = () => {
 
   const getProfile = async () => {
     await axios
-      .get(`http://localhost:3001/user/profile`, {
+      .get(`${host}user/profile`, {
         headers: {
           'authorization': `${token}`
         }
@@ -54,7 +61,7 @@ const App = () => {
       password: userPassword
     }
     await axios
-      .post(`http://localhost:3001/login`, data)
+      .post(`${host}login`, data)
       .then(response => {
         setToken(response.data.token)
         localStorage.setItem('token', response.data.token)
@@ -71,14 +78,12 @@ const App = () => {
       password: userPassword,
       usertype: userType
     }
-    await axios.post(`http://localhost:3001/register`, data)
+    await axios.post(`${host}register`, data)
   }
 
   const logOut = async () => {
     localStorage.removeItem('token')
     localStorage.removeItem('profile') // -- 
-    localStorage.removeItem('course')
-    localStorage.removeItem('exam')
     setToken(null)
     setProfile(null)
     setIsLogged(false)

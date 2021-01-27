@@ -5,6 +5,13 @@ import QuestionEdit from './QuestionEdit.js'
 import QuestionUser from './QuestionUser.js'
 import { useParams } from 'react-router-dom'
 
+let host
+
+if (process.env.NODE_ENV) 
+  host = 'https://tenttiapp.herokuapp.com/'
+else
+  host = `http://localhost:3001/`
+
 const Question = ({ token, profile }) => {
   const [myToken, setMyToken] = useState(token)
   const [myProfile, setMyProfile] = useState(profile)
@@ -18,7 +25,7 @@ const Question = ({ token, profile }) => {
 
   const getProfile = async () => {
     await axios
-      .get(`http://localhost:3001/user/profile`, {
+      .get(`${host}user/profile`, {
         headers: {
           'authorization': `${myToken}`
         }

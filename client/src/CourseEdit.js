@@ -2,7 +2,12 @@ import { useEffect, useState } from 'react'
 import { Button, TextField, Card } from '@material-ui/core'
 import axios from 'axios'
 
-/* LOKALISOI */
+let host
+
+if (process.env.NODE_ENV) 
+  host = 'https://tenttiapp.herokuapp.com/'
+else
+  host = `http://localhost:3001/`
 
 const CourseEdit = ({ token, profile }) => {
   const [myToken, setMyToken] = useState(token)
@@ -17,7 +22,7 @@ const CourseEdit = ({ token, profile }) => {
 
   const getProfile = async () => {
     await axios
-      .get(`http://localhost:3001/user/profile`, {
+      .get(`${host}user/profile`, {
         headers: {
           'authorization': `${myToken}`
         }
@@ -33,7 +38,7 @@ const CourseEdit = ({ token, profile }) => {
       id: myProfile.id
     }
     await axios
-      .put(`http://localhost:3001/user/course`, data, {
+      .put(`${host}user/course`, data, {
         headers: {
           'authorization': `${myToken}`
         }
@@ -50,7 +55,7 @@ const CourseEdit = ({ token, profile }) => {
       id: profile.id,
       name: courseName
     }
-    await axios.put(`http://localhost:3001/user/teacher/new/course`, data, {
+    await axios.put(`${host}user/teacher/new/course`, data, {
       headers: {
         'authorization': `${myToken}`
       }
@@ -62,7 +67,7 @@ const CourseEdit = ({ token, profile }) => {
     const data = {
       id: courseId
     }
-    await axios.put(`http://localhost:3001/user/teacher/delete/course`, data, {
+    await axios.put(`${host}user/teacher/delete/course`, data, {
       headers: {
         'authorization': `${myToken}`
       }
