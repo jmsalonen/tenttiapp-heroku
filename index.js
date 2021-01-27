@@ -21,8 +21,7 @@ app.use('/', auth)
 app.use('/user', passport.authenticate('jwt', { session: false }), userRoutes)
 app.use('/user/teacher', teacher)
 app.use('/user/student', student)
-console.log(__dirname)
-console.log(path.join(__dirname+'/client/build/index.html'))
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'))
 })
