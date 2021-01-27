@@ -5,6 +5,7 @@ const db = require('./db')
 const passport = require('passport')
 const app = express()
 const PORT = process.env.PORT || 3001
+const path = require('path')
 
 app.use(express.static('./client/build'))
 
