@@ -184,7 +184,7 @@ const QuestionEdit = ({ token, profile }) => {
   return (
     <>
       {question.map((q, index) => 
-        <Card className="kortti" key={`questioncard${index}`}> 
+        <Card className="kortti" key={`${examid}questioncard${index}`}> 
           <div className="sulkuNappi">
             <Button onClick={() => deleteQuestion(q.id)} color="secondary" >×</Button>
           </div>
