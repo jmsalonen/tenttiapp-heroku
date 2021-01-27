@@ -9,12 +9,17 @@ router.get('/profile', (req, res) => {
     WHERE id = $1
   `
   const values = [req.user.id]
-  db.query(text, values, (error, result) => {
-    if (error) {
-      throw error
-    }
-    return res.json(result.rows[0])
-  })
+  try {
+    db.query(text, values, (error, result) => {
+      if (error) {
+        throw error
+      }
+      return res.json(result.rows[0])
+    })
+  }
+  catch (err) {
+    res.send(err)
+  }
 }) 
 
 router.put('/course', (req, res) => {
@@ -25,12 +30,17 @@ router.put('/course', (req, res) => {
     WHERE appuser_course.id_appuser = $1
   `
   const values = [req.body.id]
-  db.query(text, values, (error, result) => {
-    if (error) {
-      throw error
-    }
-    res.send(result.rows)
-  })
+  try {
+    db.query(text, values, (error, result) => {
+      if (error) {
+        throw error
+      }
+      res.send(result.rows)
+    })
+  }
+  catch (err) {
+    res.send(err)
+  }
 })
 
 router.put('/course/exam', (req, res) => {
@@ -44,12 +54,17 @@ router.put('/course/exam', (req, res) => {
     LEFT JOIN exam ON exam.id = course_exam.id_exam
     WHERE appuser.id = $1 AND course.id = $2
   `
-  db.query(text, values, (error, result) => {
-    if (error) {
-      throw error
-    }
-    res.send(result.rows)
-  })
+  try {
+    db.query(text, values, (error, result) => {
+      if (error) {
+        throw error
+      }
+      res.send(result.rows)
+    })
+  }
+  catch (err) {
+    res.send(err)
+  }
 })
 
 module.exports = router
