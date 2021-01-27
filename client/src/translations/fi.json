@@ -1,11 +1,14 @@
 {
   "header.home": "Koti",
-  "header.courses": "Kurssit",
+  "header.courses": "Kurssitarjonta",
   "header.logout": "Poistu",
-  "header.login": "Kirjaudu",
-  "header.register": "Rekisteröidy",
-  "header.language": "Vaihda kieli",
+  "header.login": "Kirjautuminen",
+  "header.register": "Rekisteröinti",
+  "header.language": "🇬🇧",
+  "login.login": "Kirjaudu sisään",
+  "register.register": "Rekisteröidy",
   "exam.remove": "Poista tentti",
   "question.newquestion": "Uusi kysymys",
+  "question.finished": "Valmis",
   "footer.text": "Tänään on "
 }

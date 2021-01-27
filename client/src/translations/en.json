@@ -1,11 +1,14 @@
 {
   "header.home": "Home",
-  "header.courses": "Courses",
+  "header.courses": "Available courses",
   "header.logout": "Log out",
   "header.login": "Log in",
   "header.register": "Register",
-  "header.language": "Change language",
+  "header.language": "🇫🇮",
+  "login.login": "Log in",
+  "register.register": "Register",
   "exam.remove": "Remove exam",
   "question.newquestion": "New question",
+  "question.finished": "Finished",
   "footer.text": "Today is "
 }
