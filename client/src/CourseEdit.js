@@ -104,7 +104,7 @@ const CourseEdit = ({ token, profile }) => {
         />
         </div>
         <Button 
-          onClick={() => {setRefresh(!refresh); newCourse()}} 
+          onClick={() => newCourse()} 
           color="primary" >
             Uusi Kurssi
         </Button>

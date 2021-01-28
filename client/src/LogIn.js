@@ -13,7 +13,7 @@ const LogIn = ({ logIn }) => {
           <TextField label={'email'} onChange={(e) => setUserEmail(e.target.value)} />
         </div>
         <div>
-          <TextField label={'password'} onChange={(e) => setUserPassword(e.target.value)} /> 
+          <TextField label={'password'} type={'password'} onChange={(e) => setUserPassword(e.target.value)} /> 
         </div>
         <div>
           <Button onClick={() => logIn(userEmail, userPassword)}> <FormattedMessage id="login.login" /> </Button>

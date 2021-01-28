@@ -1,13 +1,24 @@
 import { useState } from 'react'
-import { Button, TextField, Card } from '@material-ui/core'
+import { Button, TextField, Card, MenuItem } from '@material-ui/core'
 import { Link } from "react-router-dom";
 import { FormattedMessage } from 'react-intl'
+
+const usertypes = [
+  {
+    value: 'student',
+    label: 'student'
+  },
+  {
+    value: 'teacher',
+    label: 'teacher'
+  }  
+]
 
 const Register = ({ register }) => {
   const [userName, setUserName] = useState()
   const [userEmail, setUserEmail] = useState()
   const [userPassword, setUserPassword] = useState()
-  const [userType, setUserType] = useState()
+  const [userType, setUserType] = useState('student')
 
   return (
     <div className="Tenttilista">
@@ -19,10 +30,23 @@ const Register = ({ register }) => {
           <TextField label={'email'} onChange={(e) => setUserEmail(e.target.value)} />
         </div>
         <div>
-          <TextField label={'password'} onChange={(e) => setUserPassword(e.target.value)} /> 
+          <TextField label={'password'} type={'password'} onChange={(e) => setUserPassword(e.target.value)} /> 
         </div>
         <div>
-          <TextField label={'usertype'} onChange={(e) => setUserType(e.target.value)} /> <br /> 
+          <TextField 
+            select
+            label={'usertype'} 
+            value={userType}
+            onChange={(e) => setUserType(e.target.value)}
+            SelectProps={{ native: true }}
+          >
+              {usertypes.map(option => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+          </TextField>
+          <br /> 
         </div>
         <div>
           <Button component={Link} to="/" onClick={() => register(userName, userEmail, userPassword, userType)}>  
