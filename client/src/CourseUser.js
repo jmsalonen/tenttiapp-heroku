@@ -106,7 +106,8 @@ const CourseUser = ({ token, profile }) => {
         Minun Kurssini
         {course.map((item, index) => 
           <div key={`course${index}`}>
-            <Button onClick={/* () => leaveCourse(item.id) */}> 
+            {/* <Button onClick={() => leaveCourse(item.id)}>  */}
+            <Button> 
               {item.name} 
             </Button>
           </div>)}
