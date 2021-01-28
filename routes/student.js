@@ -26,9 +26,11 @@ router.put('/courses/join/', (req, res) => {
         if (error) {
           throw error
         }
-        let newQuery = ''
+        let newQuery = 'INSERT INTO exam_appuser_choice VALUES '
         for (let i = 0; i < result.rows.length; ++i) {
-          newQuery += `INSERT INTO exam_appuser_choice VALUES (${result.rows[i].exam}, ${result.rows[i].appuser}, ${result.rows[i].choice}, false, false);`
+          newQuery += `(${result.rows[i].exam}, ${result.rows[i].appuser}, ${result.rows[i].choice}, false, false)`
+          if (i !== result.rows.length - 1)
+            newQuery += ', '
         }
         db.query(newQuery, (error, result) => {
           if (error) {
@@ -58,9 +60,8 @@ router.put('/courses/leave/', (req, res) => {
         throw error
       }
       let newQuery = ''
-      let newValues = [req.body.userid]
       for (let i = 0; i < result.rows.length; ++i) {
-        newQuery += `DELETE FROM exam_appuser_choice WHERE exam_appuser_choice.id_appuser = ${req.body.userid} AND exam_appuser_choice.id_exam = ${result.rows[i].exam};`
+        newQuery += `DELETE FROM exam_appuser_choice WHERE exam_appuser_choice.id_appuser = ${req.body.userid} AND exam_appuser_choice.id_exam = ${result.rows[i].exam} `
       }
       db.query(newQuery, (error, result) => {
         if (error) {
