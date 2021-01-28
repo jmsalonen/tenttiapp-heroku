@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom'
 
 let host
 
-if (process.env.NODE_ENV) 
+if (process.env.NODE_ENV === 'production') 
   host = 'https://tenttiapp.herokuapp.com/'
 else
   host = `http://localhost:3001/`

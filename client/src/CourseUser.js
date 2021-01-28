@@ -4,7 +4,7 @@ import axios from 'axios'
 
 let host
 
-if (process.env.NODE_ENV) 
+if (process.env.NODE_ENV === 'production') 
   host = 'https://tenttiapp.herokuapp.com/'
 else
   host = `http://localhost:3001/`
@@ -92,20 +92,17 @@ const CourseUser = ({ token, profile }) => {
   }
 
   useEffect(() => {
-/*     if (!myToken)
+    if (!myToken)
       getToken()
     if (!myProfile)
-      getProfile() */
+      getProfile()
     getCourse()
     getOtherCourse()
-  }, [])
+  }, [refresh])
 
   return (
     <div className="Tenttilista">
       <Card className="kortti">
-        <Button onClick={() => getProfile()}> 
-          testi
-        </Button>
         Minun Kurssini
         {course.map((item, index) => 
           <div key={`course${index}`}>
@@ -113,7 +110,8 @@ const CourseUser = ({ token, profile }) => {
               {item.name} 
             </Button>
           </div>)}
-        <hr />
+      </Card>
+      <Card className="kortti">
         Muut Kurssit
         {otherCourse.map((item, index) => 
           <div key={`other${index}`}>
