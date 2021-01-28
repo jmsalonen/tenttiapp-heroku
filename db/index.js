@@ -4,10 +4,7 @@ let connectInfo = {}
 
 if (process.env.HEROKU) {
   connectInfo = {
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false
-    }
+    connectionString: process.env.DATABASE_URL
   }
 }
 else {
