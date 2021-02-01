@@ -188,6 +188,7 @@ const QuestionEdit = ({ token, profile, examid }) => {
           <div className="sulkuNappi">
             <Button onClick={() => deleteQuestion(q.id)} color="secondary" >×</Button>
           </div>
+          <div>{q.question}</div>
           <TextField 
             defaultValue={q.question}
             style={ {width: '90%'} }
