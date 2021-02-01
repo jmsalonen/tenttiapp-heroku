@@ -132,6 +132,8 @@ const QuestionEdit = ({ token, profile, examid }) => {
   }
 
   const updateQuestion = async (id, value) => {
+    if (value.length < 1)
+      return
     const data = {
       id: id,
       name: value
@@ -189,9 +191,10 @@ const QuestionEdit = ({ token, profile, examid }) => {
             <Button onClick={() => deleteQuestion(q.id)} color="secondary" >×</Button>
           </div>
           <TextField 
-            defaultValue={q.question}
+            label={q.question}
+            defaultValue={''}
             style={ {width: '90%'} }
-            /* onBlur={ (e) => updateQuestion(q.id, e.target.value) }  */
+            onBlur={ (e) => updateQuestion(q.id, e.target.value) } 
           />
           {choice.filter(filtered => (filtered.questionid === q.id && filtered.id !== null)).map((c, index) => 
             <div key={`choiceboxes${index}`}> 
