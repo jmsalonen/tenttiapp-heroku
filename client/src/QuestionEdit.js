@@ -189,7 +189,6 @@ const QuestionEdit = ({ token, profile, examid }) => {
             <Button onClick={() => deleteQuestion(q.id)} color="secondary" >×</Button>
           </div>
           <TextField 
-            key={`${examid}questiontextfield${index}`}
             defaultValue={q.question}
             style={ {width: '90%'} }
             onBlur={ (e) => updateQuestion(q.id, e.target.value) } 

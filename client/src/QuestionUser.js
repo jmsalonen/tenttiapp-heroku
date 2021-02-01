@@ -25,37 +25,37 @@ const QuestionUser = ({ token, profile, examid, userid }) => {
   const [finished, setFinished] = useState(false)
   const [refresh, setRefresh] = useState(false)
 
-const getQuestion = async () => {
-  const data = {
-    id: examid
-  }
-  await axios
-    .put(`${host}user/teacher/get/question`, data, {
-      headers: {
-        'authorization': `${myToken}`
-      }
+  const getQuestion = async () => {
+    const data = {
+      id: examid
+    }
+    await axios
+      .put(`${host}user/teacher/get/question`, data, {
+        headers: {
+          'authorization': `${myToken}`
+        }
+      })
+      .then(response => {
+        setQuestion(response.data)
     })
-    .then(response => {
-      setQuestion(response.data)
-  })
-}
+  }
 
-const getChoice = async () => {
-  const data = {
-    user: userid,
-    exam: examid
-  }
-  await axios
-    .put(`${host}user/student/get/choice`, data, {
-      headers: {
-        'authorization': `${myToken}`
-      }
+  const getChoice = async () => {
+    const data = {
+      user: userid,
+      exam: examid
+    }
+    await axios
+      .put(`${host}user/student/get/choice`, data, {
+        headers: {
+          'authorization': `${myToken}`
+        }
+      })
+      .then(response => {
+        setChoice(response.data)
+        setFinished(response.data[0].finished)
     })
-    .then(response => {
-      setChoice(response.data)
-      setFinished(response.data[0].finished)
-  })
-}
+  }
 
   const updateAnswer = async (id, value) => {
     const data = {
