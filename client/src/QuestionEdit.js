@@ -182,7 +182,7 @@ const QuestionEdit = ({ token, profile, examid }) => {
   }, [refresh, examid])
 
   return (
-    <>
+    <div>
       {question.map((q, index) => 
         <Card className="kortti" key={`${examid}questioncard${index}`}> 
           <div className="sulkuNappi">
@@ -214,7 +214,10 @@ const QuestionEdit = ({ token, profile, examid }) => {
         </Card>
       )}
       <><Button onClick={addQuestion} color="primary" > <FormattedMessage id="question.newquestion" /> </Button></>
-    </>
+      <div>
+        {question.map((item, index) => <div key={`testi${index}${examid}`}>{item.question}</div>)}
+      </div>
+    </div>
   )  
 } 
 
