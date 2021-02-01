@@ -15,13 +15,13 @@ if (process.env.NODE_ENV === 'production')
 else
   host = `http://localhost:3001/`
 
-const QuestionEdit = ({ token, profile }) => {
+const QuestionEdit = ({ token, profile, examid }) => {
 
   const [myToken, setMyToken] = useState(token)
   const [myProfile, setMyProfile] = useState(profile)
 
   useRouteMatch()
-  const { examid } = useParams()
+  //const { examid } = useParams()
 
   const [question, setQuestion] = useState([]) 
   const [choice, setChoice] = useState([]) 

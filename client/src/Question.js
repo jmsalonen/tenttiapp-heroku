@@ -44,7 +44,7 @@ const Question = ({ token, profile }) => {
   
   return (
     myProfile.usertype === 'teacher' 
-    ? <QuestionEdit token={myToken} profile={myProfile} /> 
+    ? <QuestionEdit token={myToken} profile={myProfile} examid={examid} /> 
     : <QuestionUser token={myToken} profile={myProfile} examid={examid} userid={myProfile.id} />
   )
 }
