@@ -132,13 +132,14 @@ const Exam = ({ token, profile }) => {
               to={`${url}/${item.id}`}
               onClick={() => (setExamId(item.id))}
               color="primary">
-                {(myProfile.usertype === 'teacher' && exam.length > 0)
+                {/* {(myProfile.usertype === 'teacher' && exam.length > 0)
                 ? <TextField 
                     defaultValue={item.name}
                     style={ {width: '90%'} }
                     onBlur={ (e) => updateExam(item.id, e.target.value) } 
                   /> 
-                : item.name}
+                : item.name} */}
+                {item.name}
             </Button>) 
           : ""}
         {myProfile.usertype === "teacher" ? <Button onClick={() => {addExam()}} color="primary" > + </Button> : ""}
