@@ -188,11 +188,10 @@ const QuestionEdit = ({ token, profile, examid }) => {
           <div className="sulkuNappi">
             <Button onClick={() => deleteQuestion(q.id)} color="secondary" >×</Button>
           </div>
-          <div>{q.question}</div>
           <TextField 
             defaultValue={q.question}
             style={ {width: '90%'} }
-            onBlur={ (e) => updateQuestion(q.id, e.target.value) } 
+            /* onBlur={ (e) => updateQuestion(q.id, e.target.value) }  */
           />
           {choice.filter(filtered => (filtered.questionid === q.id && filtered.id !== null)).map((c, index) => 
             <div key={`choiceboxes${index}`}> 
@@ -214,9 +213,6 @@ const QuestionEdit = ({ token, profile, examid }) => {
         </Card>
       )}
       <><Button onClick={addQuestion} color="primary" > <FormattedMessage id="question.newquestion" /> </Button></>
-      <div>
-        {question.map((item, index) => <div key={`testi${index}${examid}`}>{item.question}</div>)}
-      </div>
     </div>
   )  
 } 
