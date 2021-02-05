@@ -5,7 +5,8 @@
 .Tenttilista {
   margin: auto;
   max-width: 60em;
-  min-width: 30em;
+  margin-top: 4em;
+  /* min-width: 30em; */
   padding: 20px;
 }
 

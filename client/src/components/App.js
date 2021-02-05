@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect
 } from "react-router-dom";
 import axios from 'axios'
+import { getProfile } from '../actions/functions.js'
 
 import Header from './Header.js'
 import Exam from './Exam.js'
@@ -15,44 +17,27 @@ import Register from './Register.js'
 import Course from './Course.js'
 import Footer from './Footer.js'
 
-import { IntlProvider } from "react-intl";
-import messages_fi from "./translations/fi.json";
-import messages_en from "./translations/en.json";
+import { IntlProvider } from 'react-intl'
+import messages_fi from '../translations/fi.json'
+import messages_en from '../translations/en.json'
+
+
+
+import { HOST } from '../config'
 
 const messages = {
   'fi': messages_fi,
   'en': messages_en
 }
 
-let host
-
-if (process.env.NODE_ENV === 'production') 
-  host = 'https://tenttiapp.herokuapp.com/'
-else
-  host = `http://localhost:3001/`
-
-
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem('token'))
-  const [isLogged, setIsLogged] = useState(false)
   const [profile, setProfile] = useState(JSON.parse(localStorage.getItem('profile')))
   const [language, setLanguage] = useState('fi')
-  
+  const [isLogged, setIsLogged] = useState(false)
+
   const changeLanguage = () => {
     language === 'en' ? setLanguage('fi') : setLanguage('en')
-  }
-
-  const getProfile = async () => {
-    await axios
-      .get(`${host}user/profile`, {
-        headers: {
-          'authorization': `${token}`
-        }
-      })
-      .then(response => {
-        setProfile(response.data)
-        localStorage.setItem('profile', JSON.stringify(response.data)) // -- 
-    })
   }
 
   const logIn = async (userEmail, userPassword) => {
@@ -61,7 +46,7 @@ const App = () => {
       password: userPassword
     }
     await axios
-      .post(`${host}login`, data)
+      .post(`${HOST}/login`, data)
       .then(response => {
         setToken(response.data.token)
         localStorage.setItem('token', response.data.token)
@@ -69,16 +54,6 @@ const App = () => {
       .catch(() => {
         console.error('Log in Error')
       })
-  }
-
-  const register = async (userName, userEmail, userPassword, userType) => {
-    const data = {
-      name: userName,
-      email: userEmail,
-      password: userPassword,
-      usertype: userType
-    }
-    await axios.post(`${host}register`, data)
   }
 
   const logOut = async () => {
@@ -90,16 +65,24 @@ const App = () => {
   }
 
   useEffect(() => {
-    if (token === null) {
+    const callProfile = () => {
+      const callback = result => {
+        setProfile(result)
+      }
+      getProfile(token, callback)
+    }
+    
+    if (!token) {
+      setToken(localStorage.getItem('token'))
       setIsLogged(false)
     }
-    else
+    else {
       setIsLogged(true)
-
-    if (isLogged) {
-      getProfile() 
+      if (!profile) 
+        callProfile()
     }
-  }, [token])
+  }, [token, profile])
+
 
   return (
     <Router>
@@ -107,16 +90,19 @@ const App = () => {
         <Header token={token} logOut={logOut} changeLanguage={changeLanguage} />
         <Switch>
           <Route path="/course/:courseid/exam">
-            <Exam token={token} profile={profile} />
+            <Exam mytoken={token} myprofile={profile} />
           </Route>
           <Route path="/register">
-            <Register register={register} />
+            <Register />
+          </Route>
+          <Route path="/login">
+            {isLogged ? <Redirect to='/' /> : <LogIn logIn={logIn} />} 
           </Route>
           <Route path="/courses">
-            <Course token={token} profile={profile} />
+            <Course mytoken={token} myprofile={profile} />
           </Route>
           <Route path="/">
-            {isLogged ? <Home token={token} profile={profile} /> : <LogIn logIn={logIn} />}
+            {isLogged ? <Home /> : <Redirect to='/login' />}
           </Route>
         </Switch>
         <Footer locale={language} />

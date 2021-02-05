@@ -1,6 +1,8 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button, TextField, Card } from '@material-ui/core'
+import { Link, Redirect } from "react-router-dom";
 import { FormattedMessage } from 'react-intl'
+import { logIn } from '../actions/functions.js'
 
 const LogIn = ({ logIn }) => {
   const [userEmail, setUserEmail] = useState()

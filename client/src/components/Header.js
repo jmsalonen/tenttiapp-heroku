@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import { FormattedMessage } from 'react-intl'
 
 const Header = ({ token, logOut, changeLanguage}) => (
-  <AppBar position="static">
+  <AppBar position="fixed">
     <Toolbar>
       <Button component={Link} to="/" style={{ color: "white" }}> 
         { token ? <FormattedMessage id="header.home" /> : <FormattedMessage id="header.login" /> }
