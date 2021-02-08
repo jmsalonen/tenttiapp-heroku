@@ -86,7 +86,7 @@ const QuestionEdit = ({ mytoken, examid }) => {
       callGetQuestion()
       callGetChoice()
     }
-  }, [refresh, examid])
+  }, [token, refresh, examid])
 
   return (
     <>

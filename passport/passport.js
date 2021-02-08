@@ -57,7 +57,7 @@ passport.use('login', localLogin)
 // Jwt Strategy
 
 const jwtOptions = {
-  secretOrKey: 'TOP_SECRET',
+  secretOrKey: process.env.SECRET,
   jwtFromRequest: ExtractJWT.fromHeader('authorization')
 }
 

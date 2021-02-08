@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Button, Card, TextField, Checkbox } from '@material-ui/core'
+import { Button, Card, Checkbox } from '@material-ui/core'
 import { green } from '@material-ui/core/colors'
 import { FormattedMessage } from 'react-intl'
 import { 
@@ -52,7 +52,7 @@ const QuestionUser = ({ mytoken, examid, userid }) => {
       callGetQuestion()
       callGetChoice()
     }
-  }, [refresh, examid])
+  }, [token, userid, refresh, examid])
 
   return (
     <div>
@@ -67,8 +67,6 @@ const QuestionUser = ({ mytoken, examid, userid }) => {
             .map((c, index) => 
             <div key={`checkboxdivi${index}`}>
               <Checkbox
-                checked={c.answer}
-                disabled={ finished }
                 checked={c.answer}
                 disabled={ finished }
                 onChange={ (e) => callUpdateAnswer(c.choiceid, e.target.checked) } 

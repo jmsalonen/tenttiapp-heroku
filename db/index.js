@@ -12,11 +12,11 @@ if (process.env.HEROKU) {
 }
 else {
   connectInfo = {
-    user: 'postgres',
-    host: 'localhost',
-    database: 'tenttikanta',
-    password: 'salonen',
-    port: 5432,
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASS,
+    port: process.env.DB_PORT,
   }
 }
 
