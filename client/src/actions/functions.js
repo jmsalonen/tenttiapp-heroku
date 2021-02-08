@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { HOST } from '../config'
 
-
 export const register = async (userName, userEmail, userPassword, userType) => {
   const data = {
     name: userName,
@@ -21,11 +20,11 @@ export const logIn = async (userEmail, userPassword, callback) => {
     .post(`${HOST}/login`, data)
     .then(response => {
       localStorage.setItem('token', response.data.token)
-      callback(true)
+      callback(response.data.token)
     })
     .catch(() => {
       console.error('Log in Error')
-      callback(false)
+      callback(null)
     })
 }
 

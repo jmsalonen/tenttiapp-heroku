@@ -6,9 +6,6 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import axios from 'axios'
-import { getProfile } from '../actions/functions.js'
-
 import Header from './Header.js'
 import Exam from './Exam.js'
 import LogIn from './LogIn.js'
@@ -16,14 +13,10 @@ import Home from './Home.js'
 import Register from './Register.js'
 import Course from './Course.js'
 import Footer from './Footer.js'
-
 import { IntlProvider } from 'react-intl'
 import messages_fi from '../translations/fi.json'
 import messages_en from '../translations/en.json'
-
-
-
-import { HOST } from '../config'
+import { getProfile, logIn } from '../actions/functions.js'
 
 const messages = {
   'fi': messages_fi,
@@ -40,25 +33,16 @@ const App = () => {
     language === 'en' ? setLanguage('fi') : setLanguage('en')
   }
 
-  const logIn = async (userEmail, userPassword) => {
-    const data = {
-      email: userEmail,
-      password: userPassword
+  const callLogIn = async (userEmail, userPassword) => {
+    const callback = result => {
+      setToken(result)
     }
-    await axios
-      .post(`${HOST}/login`, data)
-      .then(response => {
-        setToken(response.data.token)
-        localStorage.setItem('token', response.data.token)
-      })
-      .catch(() => {
-        console.error('Log in Error')
-      })
+    logIn(userEmail, userPassword, callback)
   }
 
   const logOut = async () => {
     localStorage.removeItem('token')
-    localStorage.removeItem('profile') // -- 
+    localStorage.removeItem('profile')
     setToken(null)
     setProfile(null)
     setIsLogged(false)
@@ -96,7 +80,7 @@ const App = () => {
             <Register />
           </Route>
           <Route path="/login">
-            {isLogged ? <Redirect to='/' /> : <LogIn logIn={logIn} />} 
+            {isLogged ? <Redirect to='/' /> : <LogIn logIn={callLogIn} />} 
           </Route>
           <Route path="/courses">
             <Course mytoken={token} myprofile={profile} />
