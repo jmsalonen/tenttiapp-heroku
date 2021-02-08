@@ -1,4 +1,4 @@
-import './App.css';
+import '../styles/App.css';
 import { useEffect, useState } from 'react'
 import {
   BrowserRouter as Router,
@@ -13,12 +13,12 @@ import Home from './Home.js'
 import Register from './Register.js'
 import Course from './Course.js'
 import Footer from './Footer.js'
+import { getProfile, logIn } from '../actions/functions.js'
 import { IntlProvider } from 'react-intl'
 import messages_fi from '../translations/fi.json'
 import messages_en from '../translations/en.json'
-import { getProfile, logIn } from '../actions/functions.js'
 
-const messages = {
+const MESSAGES = {
   'fi': messages_fi,
   'en': messages_en
 }
@@ -70,7 +70,7 @@ const App = () => {
 
   return (
     <Router>
-      <IntlProvider locale='fi' messages={messages[language]}>
+      <IntlProvider locale='fi' messages={MESSAGES[language]}>
         <Header token={token} logOut={logOut} changeLanguage={changeLanguage} />
         <Switch>
           <Route path="/course/:courseid/exam">
