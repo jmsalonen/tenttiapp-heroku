@@ -4,7 +4,8 @@ import {
   getProfile, 
   getCourse, 
   getOtherCourse, 
-  joinCourse 
+  joinCourse,
+  leaveCourse 
 } from '../actions/functions.js'
 import { FormattedMessage } from 'react-intl'
 
@@ -16,19 +17,12 @@ const CourseUser = ({ mytoken, myprofile }) => {
   const [otherCourse, setOtherCourse] = useState([])
   const [refresh, setRefresh] = useState(false)
 
-/*   const leaveCourse = async (courseId) => {
-    const data = {
-      userid: profile.id,
-      courseid: courseId
+  const callLeaveCourse = async (courseId) => {
+    const callback = result => {
+      setRefresh(!refresh)
     }
-
-    await axios.put(`${HOST}/user/student/courses/leave`, data, {
-      headers: {
-        'authorization': `${token}`
-      }
-    })
-    setRefresh(!refresh)
-  } */
+    leaveCourse(token, profile, courseId, callback)
+  }
 
   const callJoinCourse = async (courseId) => {
     const callback = result => {
@@ -75,8 +69,7 @@ const CourseUser = ({ mytoken, myprofile }) => {
         <FormattedMessage id="course.mycourses" />
         {course.map((item, index) => 
           <div key={`course${index}`}>
-            {/* <Button onClick={() => leaveCourse(item.id)}>  */}
-            <Button> 
+            <Button onClick={() => callLeaveCourse(item.id)}> 
               {item.name} 
             </Button>
           </div>)}

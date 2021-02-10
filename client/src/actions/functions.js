@@ -139,6 +139,25 @@ export const joinCourse = async (token, profile, courseId, callback) => {
     })
 }
 
+export const leaveCourse = async (token, profile, courseId, callback) => {
+  const data = {
+    userid: profile.id,
+    courseid: courseId
+  }
+  await axios
+    .put(`${HOST}/user/student/courses/leave`, data, {
+      headers: {
+        'authorization': `${token}`
+      }
+    })
+    .then(() => {
+      callback(true)
+    })
+    .catch(() => {
+      callback(false)
+    })
+}
+
 // exam
 
 export const getExam = async (token, profile, courseid, callback) => {

@@ -26,12 +26,19 @@ router.put('/courses/join/', (req, res) => {
         if (error) {
           throw error
         }
-        let newQuery = 'INSERT INTO exam_appuser_choice VALUES '
+        let newQuery = `
+          INSERT INTO exam_appuser_choice (id_exam, id_appuser, id_choice, finished, answer) VALUES 
+        ` 
         for (let i = 0; i < result.rows.length; ++i) {
           newQuery += `(${result.rows[i].exam}, ${result.rows[i].appuser}, ${result.rows[i].choice}, false, false)`
           if (i !== result.rows.length - 1)
             newQuery += ', '
         }
+        newQuery += `
+          ON CONFLICT (id_exam, id_appuser, id_choice) DO UPDATE
+            SET finished = false,
+                answer = false
+        `
         db.query(newQuery, (error, result) => {
           if (error) {
             throw error
@@ -47,37 +54,17 @@ router.put('/courses/join/', (req, res) => {
 })
 
 router.put('/courses/leave/', (req, res) => {
-  let text = `
-    SELECT DISTINCT course_exam.id_exam as exam
-    FROM exam_appuser_choice 
-    LEFT JOIN course_exam ON course_exam.id_exam = exam_appuser_choice.id_exam
-    WHERE exam_appuser_choice.id_appuser = $1 AND course_exam.id_course = $2
+  const text = `
+    DELETE FROM appuser_course 
+    WHERE id_appuser = $1 AND id_course = $2
   `
-  let values = [req.body.userid, req.body.courseid]
+  const values = [req.body.userid, req.body.courseid]
   try {
     db.query(text, values, (error, result) => {
       if (error) {
         throw error
       }
-      let newQuery = ''
-      for (let i = 0; i < result.rows.length; ++i) {
-        newQuery += `DELETE FROM exam_appuser_choice WHERE exam_appuser_choice.id_appuser = ${req.body.userid} AND exam_appuser_choice.id_exam = ${result.rows[i].exam} `
-      }
-      db.query(newQuery, (error, result) => {
-        if (error) {
-          throw error
-        }
-        text = `
-          DELETE FROM appuser_course 
-          WHERE id_appuser = $1 AND id_course = $2
-        `
-        db.query(text, values, (error, result) => {
-          if (error) {
-            throw error
-          }
-          res.status(200).send(`leavecourse`)
-        })
-      })
+      res.status(200).send(`leavecourse`)
     })
   }
   catch (err) {
@@ -87,7 +74,7 @@ router.put('/courses/leave/', (req, res) => {
 
 router.put('/courses/other/', (req, res) => {
   const text = `
-    SELECT * 
+    SELECT DISTINCT course.id, course.name
     FROM course
     LEFT JOIN appuser_course ON appuser_course.id_course = course.id
     WHERE course.id NOT IN (
@@ -132,7 +119,7 @@ router.put('/get/choice', (req, res) => { // /get/choice/
     res.send(err)
   }
 })
- 
+
 router.put('/update/answer/', (req, res) => {
   const text = `
     UPDATE exam_appuser_choice

@@ -184,16 +184,41 @@ router.put('/delete/question/', (req, res) => {
 }) 
 
 router.put('/add/choice/', (req, res) => {
-  const text = `
-    INSERT INTO choice VALUES (DEFAULT, $1, \'\', false)
+  let text = `
+    INSERT INTO choice VALUES (DEFAULT, $1, \'\', false) RETURNING id
   `
-  const values = [req.body.id]
+  let values = [req.body.id]
   try {
     db.query(text, values, (error, result) => {
       if (error) {
         throw error
       }
       res.status(201).send(`New choice added!`)
+      let choiceid = result.rows[0].id
+      text = `
+        SELECT DISTINCT exam_appuser_choice.id_appuser AS appuser, exam_appuser_choice.id_exam AS examid
+        FROM question 
+        LEFT JOIN exam ON exam.id = question.id_exam
+        LEFT JOIN exam_appuser_choice ON exam_appuser_choice.id_exam = exam.id
+        WHERE question.id = $1
+      `
+      values = [req.body.id]
+      db.query(text, values, (error, result) => {
+        if (error) {
+          throw error
+        }
+        text = 'INSERT INTO exam_appuser_choice VALUES '
+        for (let i = 0; i < result.rows.length; ++i) {
+          text += `(${result.rows[i].examid}, ${result.rows[i].appuser}, ${choiceid}, false, false)`
+          if (i !== result.rows.length - 1)
+            text += ', '
+        }
+        db.query(text, (error, result) => {
+          if (error) {
+            throw error
+          }
+        })
+      })
     })
   }
   catch (err) {
