@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Button, Card } from '@material-ui/core'
+import { Link } from "react-router-dom"
 import { 
   getProfile, 
   getCourse, 
@@ -8,6 +9,9 @@ import {
   leaveCourse 
 } from '../actions/functions.js'
 import { FormattedMessage } from 'react-intl'
+import KeyboardArrowDownOutlinedIcon from '@material-ui/icons/KeyboardArrowDownOutlined'
+import KeyboardArrowUpOutlinedIcon from '@material-ui/icons/KeyboardArrowUpOutlined'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 
 const CourseUser = ({ mytoken, myprofile }) => {
   const [token, setToken] = useState(mytoken)
@@ -66,24 +70,27 @@ const CourseUser = ({ mytoken, myprofile }) => {
   return (
     <div className="Tenttilista">
       <Card className="kortti">
-        <FormattedMessage id="course.mycourses" />
+        <Button component={Link} to='/'> <ArrowBackIcon /> </Button>
+        <ul><h3> <FormattedMessage id="course.mycourses" /> </h3>
         {course.map((item, index) => 
           <div key={`course${index}`}>
             <Button onClick={() => callLeaveCourse(item.id)}> 
+              <KeyboardArrowDownOutlinedIcon color="secondary" />
               {item.name} 
             </Button>
           </div>)}
+        </ul>
       </Card>
       <Card className="kortti">
-        <FormattedMessage id="course.othercourses" />
+        <ul><h3> <FormattedMessage id="course.othercourses" /> </h3>
         {otherCourse.map((item, index) => 
           <div key={`other${index}`}>
-            <Button 
-              onClick={() => callJoinCourse(item.id)}
-            > 
+            <Button onClick={() => callJoinCourse(item.id)}> 
+              <KeyboardArrowUpOutlinedIcon color="primary" />
               {item.name} 
             </Button>
           </div>)}
+        </ul>
       </Card>
     </div>
   )

@@ -37,14 +37,20 @@ const Home = () => {
   return (
     <div className="Tenttilista">
       <Card className="kortti">
-        <div>
-          {profile.id} | {profile.name} | {profile.email} | {profile.usertype} <br />
-        </div>
-        <div>
-        {course.map((item, index) => <div key={`homebutton${index}`}>
-          <Button component={Link} to={`course/${item.id}/exam`} > {item.name} </Button>
-        </div>)}
-        </div>
+        <ul>
+          <div>
+            {profile.name} | {profile.email} | {profile.usertype} 
+          </div>
+          <div>
+            {course.map((item, index) => 
+              <div key={`homebutton${index}`}>
+                <Button component={Link} to={`course/${item.id}/exam`} > 
+                  {item.name} 
+                </Button>
+              </div>
+            )}
+          </div>
+        </ul>
       </Card>
     </div>
   )

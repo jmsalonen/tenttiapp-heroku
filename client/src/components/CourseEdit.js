@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Button, TextField, Card } from '@material-ui/core'
+import { Link } from "react-router-dom"
 import { getProfile, getCourse, newCourse, deleteCourse } from '../actions/functions.js'
 import { FormattedMessage } from 'react-intl'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 
 const CourseEdit = ({ mytoken, myprofile }) => {
   const [token, setToken] = useState(mytoken)
@@ -52,28 +54,34 @@ const CourseEdit = ({ mytoken, myprofile }) => {
   return (
     <div className="Tenttilista">
       <Card className="kortti">
+        <Button component={Link} to='/'> <ArrowBackIcon /> </Button>
+        <ul><h3> <FormattedMessage id="course.mycourses" /> </h3></ul>
         {course.map((item, index) => <div key={`coursediv${index}`}>
-          <Button> 
+          <ul>
+            <Button 
+              onClick={() => callDeleteCourse(item.id)} 
+              color="secondary" 
+            > × </Button>
             {item.name} 
-          </Button>
-          <Button 
-            onClick={() => callDeleteCourse(item.id)} 
-            color="secondary" 
-          > × </Button>
+          </ul>
         </div>)}
-        <div>
-        <TextField 
-          label={<FormattedMessage id="course.namecourse" />}
-          style={ {width: '50%'} } 
-          onChange={ (e) => setCourseName(e.target.value) } 
-        />
-        </div>
-        <Button 
-          onClick={addNewCourse} 
-          color="primary" 
-        >
-          <FormattedMessage id="course.newcourse" />
+        <ul>
+          <TextField 
+            label={<FormattedMessage id="course.namecourse" />}
+            variant={"outlined"} 
+            style={ {width: '22em'} } 
+            onChange={ (e) => setCourseName(e.target.value) } 
+          />
+        </ul>
+        <ul>
+          <Button 
+            onClick={addNewCourse} 
+            color="primary" 
+            variant="contained"
+          >
+            <FormattedMessage id="course.newcourse" />
         </Button>
+        </ul>
       </Card>
     </div>
   )

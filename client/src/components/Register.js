@@ -24,29 +24,37 @@ const Register = () => {
   return (
     <div className="Tenttilista">
       <Card className="kortti">
-        <div>
+        <ul>
+        <div style={{ margin: '10px' }}>
+          <h4> <FormattedMessage id="register.register" /> </h4>
+        </div>
+        <div style={{ margin: '10px' }}>
           <TextField 
             label={'name'} 
+            variant={"outlined"} 
             onChange={(e) => setUserName(e.target.value)} 
           />
         </div>
-        <div>
+        <div style={{ margin: '10px' }}>
           <TextField 
             label={'email'} 
+            variant={"outlined"} 
             onChange={(e) => setUserEmail(e.target.value)} 
           />
         </div>
-        <div>
+        <div style={{ margin: '10px' }}>
           <TextField 
             label={'password'} 
+            variant={"outlined"} 
             type={'password'} 
             onChange={(e) => setUserPassword(e.target.value)} 
           /> 
         </div>
-        <div>
+        <div style={{ margin: '10px' }}>
           <TextField 
             select
             label={'usertype'} 
+            variant={"outlined"} 
             value={userType}
             onChange={(e) => setUserType(e.target.value)}
             SelectProps={{ native: true }}
@@ -59,14 +67,17 @@ const Register = () => {
           </TextField>
           <br /> 
         </div>
-        <div>
+        <div style={{ margin: '10px' }}>
           <Button 
             component={Link} to="/" 
+            color="primary" 
+            variant="contained"
             onClick={() => register(userName, userEmail, userPassword, userType)}
           >  
-            <FormattedMessage id="register.register" /> 
+            <FormattedMessage id="question.finished" /> 
           </Button>
         </div>
+        </ul>
       </Card>
     </div>
   )

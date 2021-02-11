@@ -1,9 +1,9 @@
 {
-  "header.home": "Koti",
+  "header.home": "TenttiApp",
   "header.courses": "Kurssitarjonta",
   "header.logout": "Poistu",
-  "header.login": "Kirjautuminen",
-  "header.register": "Rekisteröinti",
+  "header.login": "Kirjaudu",
+  "header.register": "Rekisteröidy",
   "header.language": "🇬🇧",
   "login.login": "Kirjaudu sisään",
   "register.register": "Rekisteröidy",

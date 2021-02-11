@@ -58,8 +58,9 @@ const QuestionUser = ({ mytoken, examid, userid }) => {
     <div>
       {question.map((q, index) => 
         <Card className="kortti" key={`questioncard${index}`}> 
+        <ul>
           <div>
-            {q.question}
+            <h4>{q.question}</h4>
             {/* // if finished then checkicon else blockicon */}
           </div>
           {choice.filter(filtered => 
@@ -80,6 +81,7 @@ const QuestionUser = ({ mytoken, examid, userid }) => {
               <label>{c.name}</label>
             </div>
           )}
+        </ul>
         </Card>
       )}
       <div>

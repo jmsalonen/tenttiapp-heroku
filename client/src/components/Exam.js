@@ -10,6 +10,7 @@ import {
 import Question from './Question.js'
 import { getProfile, getExam, newExam, deleteExam, updateExam } from '../actions/functions.js'
 import { FormattedMessage } from 'react-intl'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 
 const Exam = ({ mytoken, myprofile }) => {
   const { path, url } = useRouteMatch()
@@ -72,6 +73,7 @@ const Exam = ({ mytoken, myprofile }) => {
   return (
     <div className="Tenttilista">
       <div>
+        <Button component={Link} to='/'> <ArrowBackIcon /> </Button>
         {exam.length > 0 
           ? exam.map((item, index) =>  
             <Button key={`exambutton${index}`}
